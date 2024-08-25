@@ -28,7 +28,10 @@ def define_amount_turns(massive):
         sum += abs(i - massive[m])
     return sum
 
-if __name__ == '__main__':
+def main():
     args = arg_parser()
     massive = unload_file(args.file_path)
     print(define_amount_turns(sorted(massive)))
+    
+if __name__ == '__main__':
+    main()
