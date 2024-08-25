@@ -22,27 +22,29 @@ def unload_file_json(file_path):
         data = json.load(f)
     return data
 
-def fill_report(test_data, value_data):
-    for key in test_data.keys():
-        if isinstance(test_data[key], dict):
-            fill_report(test_data[key], value_data)
-        for i in value_data:
-            for i1 in i:
-                print(key['id'], i1['id'])
-                if key['id'] == i1['id']:
-                    key['value'] = i1['value']
-
+def fill_report(tests_structure, values):
+    if isinstance(tests_structure, dict):
+        for key, value in tests_structure.items():
+            if key == 'id':
+                for i in values['values']:
+                    if i['id'] == value:
+                        tests_structure['value'] = i['value']
+            elif isinstance(value, dict) or isinstance(value, list):
+                fill_report(value, values)
+    elif isinstance(tests_structure, list):
+        for item in tests_structure:
+            fill_report(item, values)
 
 def write_file(file, file_path):
     print(file)
     with open(file_path, 'w') as write:
-        json.dumps(file, indent=4)
+        json.dump(file, write, indent=4)
 
 def main():
     args = arg_parser()
     values = unload_file_json(args.file_path_1)
     tests = unload_file_json(args.file_path_2)
-    fill_report(tests, values['values'])
+    fill_report(tests, values)
     write_file(tests, args.file_path_3)
 
 if __name__ == "__main__":
