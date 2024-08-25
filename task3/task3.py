@@ -39,11 +39,11 @@ def write_file(file, file_path):
         json.dumps(file, indent=4)
 
 def main():
-    
-
-if __name__ == "__main__":
     args = arg_parser()
     values = unload_file_json(args.file_path_1)
     tests = unload_file_json(args.file_path_2)
     fill_report(tests, values['values'])
     write_file(tests, args.file_path_3)
+
+if __name__ == "__main__":
+    main()
