@@ -35,7 +35,10 @@ def checking_the_location_of_dot(dot, circle):
     if result == int(circle['radius']): return 0
     if result > int(circle['radius']): return 2
 
-if __name__ == "__main__":
+def main():
     args = arg_parser()
     circle = loading_circle(args.file_path_1)
     unloading_the_file_with_dots(circle, args.file_path_2)
+
+if __name__ == "__main__":
+    main()
