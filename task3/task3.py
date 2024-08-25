@@ -1,5 +1,4 @@
 import argparse
-import os
 import json
 
 def arg_parser():
@@ -23,12 +22,28 @@ def unload_file_json(file_path):
         data = json.load(f)
     return data
 
-def report_file(values_json, tests_json, file_path):
-    for key in tests_json.keys():
-        
+def fill_report(test_data, value_data):
+    for test in test_data:
+        print(test)
+        if 'id' in test:
+            test_id = test['id']
+            if test_id in value_data:
+                test['value'] = value_data[test_id]
+        if 'children' in test:
+            print(test)
+            fill_report(test['children'], value_data)
+
+
+def write_file(file, file_path):
+    with open(file_path, 'w') as write:
+        json.dumps(file, indent=4)
+
+def main():
+    
 
 if __name__ == "__main__":
     args = arg_parser()
     values = unload_file_json(args.file_path_1)
     tests = unload_file_json(args.file_path_2)
-    report_file(values, tests, arg.file_path_3)
+    fill_report(tests, values['values'])
+    write_file(tests, args.file_path_3)
