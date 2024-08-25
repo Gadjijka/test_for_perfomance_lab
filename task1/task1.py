@@ -53,7 +53,9 @@ def the_main_logic(n, m):
         index_for_m += 1
     print(f'The whole path - {road}')
 
-
-if __name__ == "__main__":
+def main():
     args = arg_parser()
     the_main_logic(args.n, args.m)
+
+if __name__ == "__main__":
+    main()
