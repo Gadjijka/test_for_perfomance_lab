@@ -23,18 +23,18 @@ def unload_file_json(file_path):
     return data
 
 def fill_report(test_data, value_data):
-    for test in test_data:
-        print(test)
-        if 'id' in test:
-            test_id = test['id']
-            if test_id in value_data:
-                test['value'] = value_data[test_id]
-        if 'children' in test:
-            print(test)
-            fill_report(test['children'], value_data)
+    for key in test_data.keys():
+        if isinstance(test_data[key], dict):
+            fill_report(test_data[key], value_data)
+        for i in value_data:
+            for i1 in i:
+                print(key['id'], i1['id'])
+                if key['id'] == i1['id']:
+                    key['value'] = i1['value']
 
 
 def write_file(file, file_path):
+    print(file)
     with open(file_path, 'w') as write:
         json.dumps(file, indent=4)
 
